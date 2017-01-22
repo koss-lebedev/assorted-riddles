@@ -20,38 +20,28 @@ class Node < Struct.new(:left, :right)
       queue << [node.right, depth + 1] if node.right
     end
 
-    true
+    return true
   end
 
 end
 
 
-root = Node.new(
-    Node.new(
-        Node.new(nil, nil),
-        Node.new(nil, nil)
-    ),
-    Node.new(
-        Node.new(nil, nil),
-        Node.new(nil, nil)
-    )
-)
 
 require 'minitest/autorun'
 
 describe 'PerfectTree' do
 
-  it 'is root-only tree' do
+  it 'has only root' do
     root = Node.new(nil, nil)
     assert_equal(true, root.perfect?)
   end
 
-  it 'is full one-level' do
+  it 'has full one-level' do
     root = Node.new( Node.new(nil, nil), Node.new(nil, nil) )
     assert_equal(true, root.perfect?)
   end
 
-  it 'is one child tree' do
+  it 'has one child tree' do
     root = Node.new( Node.new(nil, nil), nil )
     assert_equal(false, root.perfect?)
   end
