@@ -1,8 +1,8 @@
 def middle_permutation(str)
   chars = str.chars.sort
 
-  # we only need half of permutations since they are generated in order
   count = (1..chars.size).reduce(1, :*) / 2
+
   handler = Proc.new do |permutation|
     count -= 1
     return permutation if count.zero?
@@ -27,7 +27,19 @@ def permutate(chars, tracker, result, level, block)
 end
 
 
-puts middle_permutation('cba')
 
-# "abc", "acb", "bac", "bca", "cab", "cba"
-# So, The middle term is "bac".
+require 'minitest/autorun'
+
+describe 'middle permutation' do
+
+  it 'calculates for short string' do
+    actual = middle_permutation('abc')
+    assert_equal actual, 'bac'
+  end
+
+  it 'calculates for long string' do
+    actual = middle_permutation('abcdefghij')
+    assert_equal actual, 'ejihgfdcba'
+  end
+
+end
