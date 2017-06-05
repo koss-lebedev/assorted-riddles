@@ -1,6 +1,21 @@
 def middle_permutation(str)
   chars = str.chars.sort
 
+  if chars.size.even?
+    middle_index = chars.size / 2 - 1
+    middle = chars.delete_at(middle_index)
+    ([middle] + chars.reverse).join
+  else
+    middle_index = chars.size / 2
+    middle = chars.delete_at(middle_index)
+    middle + middle_permutation(chars.join)
+  end
+
+end
+
+def middle_permutation_alt(str)
+  chars = str.chars.sort
+
   count = (1..chars.size).reduce(1, :*) / 2
 
   handler = Proc.new do |permutation|
