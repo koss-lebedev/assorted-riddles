@@ -1,11 +1,10 @@
 def encode_rail_fence_cipher(str, num_rails)
   result = Array.new(num_rails) { [] }
-  i = 0
   rail = 0
   down = true
-  while str[i]
-    result[rail] << str[i]
-    i += 1
+
+  str.chars.each do |char|
+    result[rail] << char
     if down
       rail += 1
     else
