@@ -4,18 +4,19 @@ def brain_luck(code, input)
 
   data_pointer = 0
   cmd_pointer = 0
+  input_pointer = -1
 
   while cmd_pointer < code.size
     cmd = code[cmd_pointer]
     case cmd
       when ?> then data_pointer += 1
-      when ?< then data_pointer -= 1
-      when ?+ then data[data_pointer] = (data.fetch(data_pointer) { 0 } + 1) % 256
-      when ?- then data[data_pointer] = (data.fetch(data_pointer) { 0 } - 1) % 256
+      when ?< then data_pointer -= 1 if data_pointer > 0
+      when ?+ then data[data_pointer] = ((data[data_pointer] || 0) + 1) % 256
+      when ?- then data[data_pointer] = ((data[data_pointer] || 0) - 1) % 256
       when ?. then output += data[data_pointer].chr
-      when ?, then data[data_pointer] = input.slice!(0).ord
+      when ?, then data[data_pointer] = input[input_pointer += 1].ord
       when ?[
-        if data[data_pointer] == 0
+        if (data[data_pointer] || 0) == 0
           nested = 1
           while nested > 0
             case code[cmd_pointer += 1]
@@ -25,7 +26,7 @@ def brain_luck(code, input)
           end
         end
       when ?]
-        if data[data_pointer] != 0
+        if (data[data_pointer] || 0) != 0
           nested = 1
           while nested > 0
             case code[cmd_pointer -= 1]
@@ -40,6 +41,7 @@ def brain_luck(code, input)
 
   output
 end
+
 
 
 require 'minitest/autorun'
