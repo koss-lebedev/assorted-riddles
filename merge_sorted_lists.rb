@@ -28,6 +28,17 @@ def merge_sorted_lists(left, right)
   result
 end
 
+def merge_sorted_lists_2(a, b, result = [])
+  if a.size == 0
+    result.concat(b)
+  elsif b.size == 0
+    result.concat(a)
+  else
+    result << (a[0] < b[0] ? a.shift : b.shift)
+    merge_sorted_lists_2(a, b, result)
+  end
+end
+
 
 
 require 'minitest/autorun'
