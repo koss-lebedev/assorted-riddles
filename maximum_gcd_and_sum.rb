@@ -1,35 +1,39 @@
-def gcd(a, b)
-  while b != 0
-    c = a % b
-    a, b = b, c
-  end
-  a
-end
-
 def solve(a, b)
-  n = a.size
+  a.sort!
+  b.sort!
 
-  a.sort! { |i, j| j <=> i }
-  b.sort! { |i, j| j <=> i }
+  max_val = [a.last, b.last].max
+  f_a = Array.new(max_val + 1, 0)
+  f_b = Array.new(max_val + 1, 0)
 
-  max, res, i = 0, 0, 0
+  a.size.times do |i|
+    f_a[a[i]] += 1
+    f_b[b[i]] += 1
+  end
 
-  while a[i] > max && i < n
-    j = 0
-    while b[j] > max && j < n
-      d = a[i] > b[j] ? gcd(a[i], b[j]) : gcd(b[j], a[i])
-      if d > max
-        max = d
-        res = a[i] + b[j]
-      end
+  i = 1
 
-      j += 1
+  res = 0
+  while i <= max_val
+    max_a, max_b = nil, nil
+
+    j = i
+    while j <= max_val
+      max_a = j if f_a[j] > 0
+      max_b = j if f_b[j] > 0
+
+      j += i
     end
+
+    res = max_a + max_b if max_a && max_b
     i += 1
   end
 
   res
 end
+
+a = [3, 1, 4, 2, 8]
+b = [5, 2, 12, 8, 3]
 
 
 
@@ -43,4 +47,3 @@ describe 'solution' do
   end
 
 end
-
