@@ -32,9 +32,6 @@ def solve(a, b)
   res
 end
 
-a = [3, 1, 4, 2, 8]
-b = [5, 2, 12, 8, 3]
-
 
 
 require 'minitest/autorun'
