@@ -1,15 +1,8 @@
-def sum_of_two(a, b, v)
-  a.sort! { |x, y| y <=> x }
-  b.sort! { |x, y| y <=> x }
+def sum_of_two(a, b, sum)
+  hash = a.each_with_object({}) { |v, h| h[v] = true }
 
-  i = 0
-  while i < a.size
-    j = 0
-    while j < b.size && a[i] + b[j] >= v
-      return true if a[i] + b[j] == v
-      j += 1
-    end
-    i += 1
+  b.each do |i|
+    return true if hash[sum-i]
   end
 
   false
