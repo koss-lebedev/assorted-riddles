@@ -1,19 +1,24 @@
 def solution(word)
   i = word.size - 2
-  x = nil
   while (word[i] >= word[i+1]) && (i >= 0)
-    if word[i+1] > word[0] && (x == nil || word[i+1] < word[x])
-      x = i+1
-    end
     i -= 1
   end
 
-  return nil if i < 0
+  if i < 0
+    nil
+  else
+    j = word.size - 1
+    while j > i
+      if word[j] > word[i]
+        word[j], word[i] = word[i], word[j]
+        break
+      end
+      j -= 1
+    end
 
-  x = i+1 unless x
 
-  word[i], word[x] = word[x], word[i]
-  (word[0..i].chars + word[i+1..word.size].chars.sort).join
+    (word[0..i].chars + word[i+1..word.size].chars.sort).join
+  end
 end
 
 
