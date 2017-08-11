@@ -8,30 +8,12 @@ type tree struct {
 	Right *tree
 }
 
-func traverse(node *tree, sum int, exp int, found *bool) {
-	if *found {
-		return
-	}
-	if node.Left == nil && node.Right == nil {
-		if (sum + node.Value.(int)) == exp {
-			*found = true
-		}
-	} else {
-		if node.Left != nil {
-			traverse(node.Left, sum+node.Value.(int), exp, found)
-		}
-		if node.Right != nil {
-			traverse(node.Right, sum+node.Value.(int), exp, found)
-		}
-	}
-}
-
 func hasPathWithGivenSum(t *tree, s int) bool {
-	var found = false
-	if t != nil {
-		traverse(t, 0, s, &found)
+	if t == nil {
+		return s == 0
 	}
-	return found
+	var rem = s - t.Value.(int)
+	return hasPathWithGivenSum(t.Left, rem) || hasPathWithGivenSum(t.Right, rem)
 }
 
 //     4
@@ -70,5 +52,7 @@ func main() {
 			},
 		},
 	}
-	fmt.Println(hasPathWithGivenSum(tree, 7))
+
+	fmt.Println("Case #1:", hasPathWithGivenSum(tree, 7) == true)
+	fmt.Println("Case #2:", hasPathWithGivenSum(tree, 2) == false)
 }
